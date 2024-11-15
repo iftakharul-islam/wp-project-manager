@@ -153,12 +153,8 @@ module.exports = function(grunt) {
         'clean',
         'run:reset',
         'run:makepot',
-        'run:removeDev',
-        'run:dumpautoload',
         'replace',
         'copy',
         'compress',
-        'run:composerInstall',
-        'run:dumpautoload',
     ]);
 };
