@@ -2,7 +2,7 @@ name: Deploy to WordPress.org
 on:
   push:
     branches:
-      - "test-cicd"  # Triggers only on the "test-cicd" branch
+      - "test-cicd"  # Triggers only on the "test-cicd" branch check
 
 permissions:
   contents: write
