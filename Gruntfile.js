@@ -151,10 +151,14 @@ module.exports = function(grunt) {
 
     grunt.registerTask( 'release', [
         'clean',
-        'run:reset',
-        'run:makepot',
+        // 'run:reset',
+        // 'run:makepot',
+        // 'run:removeDev',
+        // 'run:dumpautoload',
         'replace',
         'copy',
-        'compress',
+        // 'compress',
+        // 'run:composerInstall',
+        // 'run:dumpautoload',
     ]);
 };

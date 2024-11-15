@@ -2,39 +2,40 @@ name: Deploy to WordPress.org
 on:
   push:
     branches:
-      - "test-cicd"  # Triggers only on the "test-cicd" branch check
-
+      - "test-cicd" 
 permissions:
   contents: write
-
 jobs:
   tag:
-    name: Deploy plugin on Push
-    runs-on: macos-latest  # Use macOS instead of Ubuntu
-
+    name: Deploy plugin for new Tag
+    runs-on: macos-latest
     steps:
+   
       - uses: actions/checkout@v4
-
-      - name: Use desired version of PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-
-      - name: Composer install and build # Remove or modify this step as needed
-        run: |
-          composer install
-          composer update
-          composer install --no-dev
-          composer dump-autoload -o
-
       - name: Use Node.js 12.1.0
         uses: actions/setup-node@v4
         with:
           node-version: 12.1.0
-
+      - uses: actions/checkout@master
       - name: Npm install and build
         run: |
-          rm -f package-lock.json
-          npm install -g grunt-cli
+          rm -r package-lock.json
           npm i
-          grunt release
+          npm run build
+          npm run makepot
+      - name: Use desired version of php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+      - name: Composer install and build # Remove or modify this step as needed
+        run: |
+          composer install
+          composer dump-autoload -o
+          composer install --no-dev
+          composer dump-autoload -o
+      - name: Generate zip
+        uses: 10up/action-wordpress-plugin-build-zip@stable
+        with:
+          retention-days: 5
+        env:
+         SLUG: wedevs-project-manager # optional, remove if GitHub repo name matches SVN slug, including capitalization
