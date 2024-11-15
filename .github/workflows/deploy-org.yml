@@ -2,7 +2,7 @@ name: Deploy to WordPress.org
 on:
   push:
     branches:
-      - "*"  # Triggers on all branches; adjust as needed if you want to restrict to a specific branch (e.g., "main" or "develop")
+      - "*"  # Triggers on all branches; adjust if you want to restrict to specific branches like "main" or "develop"
 
 permissions:
   contents: write
@@ -30,8 +30,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 12.1.0
-
-      - uses: actions/checkout@master
 
       - name: Npm install and build
         run: |
