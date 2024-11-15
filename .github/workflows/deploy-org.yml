@@ -2,7 +2,7 @@ name: Deploy to WordPress.org
 on:
   push:
     branches:
-      - "*"  # Triggers on all branches; adjust if you want to restrict to specific branches like "main" or "develop"
+      - "test-cicd"  # Triggers only on the "test-cicd" branch
 
 permissions:
   contents: write
@@ -10,7 +10,8 @@ permissions:
 jobs:
   tag:
     name: Deploy plugin on Push
-    runs-on: ubuntu-latest
+    runs-on: macos-latest  # Use macOS instead of Ubuntu
+
     steps:
       - uses: actions/checkout@v4
 
