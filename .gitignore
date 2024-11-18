@@ -1,30 +1,23 @@
-# Dependency directories
 /node_modules/
 /vendor/
-
-# Build artifacts
 /views/assets/js/
 /views/assets/css/pm-style.css
-/build/
-npm-debug.log
-/tmp/
-
-# IDE and environment files
 /.idea
 .env
 .DS_Store
-pm.sublime-project
-
-# CI/CD and testing files
 .travis.yml
+npm-debug.log
+/bin/
 /tests/bootstrap.php
 /tests/test-sample.php
-/phpcs.ruleset.xml
-/phpunit.xml.dist
-phpcs-report.txt
-
-# Miscellaneous
+phpcs.ruleset.xml
+phpunit.xml.dist
 composer.phar
+/tmp
+/build/
+pm.sublime-project
+phpcs-report.txt
 /languages/wedevs-project-manager.pot
 /views/assets/vendor/wp-hooks/pm-hooks.js
 /views/assets/vendor/vue-fullscreen/vue-fullscreen.min.js
+
