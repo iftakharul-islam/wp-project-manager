@@ -126,6 +126,12 @@ class Task_Controller {
         // return $response ;
     }
 
+    public function create_task_checklist( WP_REST_Request $request ) {
+        $data = $request->get_params();
+        
+       
+    }
+
     public static function create_task( $data ) {
         $self = self::getInstance();
         $project_id = $data[ 'project_id' ];

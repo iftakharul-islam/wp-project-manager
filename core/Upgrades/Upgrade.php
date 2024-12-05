@@ -15,6 +15,7 @@ class Upgrade {
         '2.3'   => 'Upgrade_2_3',
         '2.4.1' => 'Upgrade_2_4_1',
         '2.5'   => 'Upgrade_2_4_4',
+        '2.6'   => 'Upgrade_2_6',
     ];
 
     public static $instance = null;
