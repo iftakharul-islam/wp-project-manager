@@ -1,52 +1,73 @@
-name: Deploy to WordPress.org
 on:
   push:
     branches:
-      - "test-cicd" 
+      - "test-cicd"  # Trigger on this branch
+
 permissions:
-  contents: write
+  contents: write  # Permissions to push the contents
+
 jobs:
   tag:
     name: Deploy plugin for new Tag
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use latest Ubuntu runner
+
     steps:
-   
-      - uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js environment
       - name: Use Node.js 12.1.0
         uses: actions/setup-node@v4
         with:
           node-version: 12.1.0
-      - uses: actions/checkout@master
+
+      # Step 3: Install Node.js dependencies and build the project
       - name: Npm install and build
         run: |
-          rm -r package-lock.json
-          npm i
-          npm run build
-          npm run makepot
-      - name: Use desired version of php
+          rm -r package-lock.json  # Clean the package-lock file
+          npm i                     # Install dependencies
+          npm run build             # Run the build process
+          npm run makepot           # Generate POT file for translations
+
+      # Step 4: Setup PHP environment (if required for your plugin)
+      - name: Use desired version of PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-      - name: Composer install and build # Remove or modify this step as needed
+
+      # Step 5: Composer install (if your plugin requires PHP dependencies)
+      - name: Composer install and build
         run: |
           composer install
           composer dump-autoload -o
           composer install --no-dev
           composer dump-autoload -o
-      - name: Generate zip
+
+      # Step 6: Generate the WordPress plugin ZIP file
+      - name: Generate ZIP file for WordPress plugin
         uses: 10up/action-wordpress-plugin-build-zip@stable
         with:
-          retention-days: 5
+          retention-days: 5  # Optional: Specify how many days to retain the generated artifact
         env:
-         SLUG: wedevs-project-manager # optional, remove if GitHub repo name matches SVN slug, including capitalization
-      # 9. Deploy to FTP Server
-      - name: Deploy to FTP Server
+          SLUG: wedevs-project-manager  # Optional: Specify plugin slug if different from repo name
+
+      # Step 7: Upload the ZIP file as an artifact (optional)
+      - name: Upload the ZIP file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
+          path: ${{ github.workspace }}/${{ github.repository }}.zip  # Path to the generated ZIP file
+          retention-days: 5  # Optional: Artifact retention
+
+      # Step 8: Deploy the ZIP file directly to FTP server
+      - name: Deploy the ZIP file to FTP Server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}  # Optional: defaults to 21 for FTP
-          local-dir: ./zipfile/  # Replace with your actual build directory
-          server-dir: /wp-project-manager/  # Remote directory on the server
+          local-dir: ${{ github.workspace }}/${{ github.repository }}.zip  # Path to the generated ZIP file
+          server-dir: /wp-project-manager/  # Remote directory on the FTP server
           protocol: ftp  # Specify 'sftp' if using SFTP
