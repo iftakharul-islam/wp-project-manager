@@ -47,6 +47,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}  # Optional: defaults to 21 for FTP
-          local-dir: ./  # Replace with your actual build directory
-          server-dir: /saastric/my.saastrick.com/wp-content/plugins/  # Remote directory on the server
+          local-dir: ./zipfile/  # Replace with your actual build directory
+          server-dir: /wp-project-manager/  # Remote directory on the server
           protocol: ftp  # Specify 'sftp' if using SFTP
