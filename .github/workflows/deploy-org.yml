@@ -39,3 +39,14 @@ jobs:
           retention-days: 5
         env:
          SLUG: wedevs-project-manager # optional, remove if GitHub repo name matches SVN slug, including capitalization
+      # 9. Deploy to FTP Server
+      - name: Deploy to FTP Server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}  # Optional: defaults to 21 for FTP
+          local-dir: ./build/  # Replace with your actual build directory
+          server-dir: /saastric/my.saastrick.com/wp-content/plugins  # Remote directory on the server
+          protocol: ftp  # Specify 'sftp' if using SFTP
