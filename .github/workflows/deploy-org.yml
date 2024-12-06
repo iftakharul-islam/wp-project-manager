@@ -1,3 +1,5 @@
+name: Deploy to WordPress.org
+
 on:
   push:
     branches:
@@ -52,15 +54,15 @@ jobs:
         env:
           SLUG: wedevs-project-manager  # Optional: Specify plugin slug if different from repo name
 
-      # Step 7: Upload the ZIP file as an artifact (optional)
-      - name: Upload the ZIP file as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ github.event.repository.name }}
-          path: ${{ github.workspace }}/${{ github.repository }}.zip  # Path to the generated ZIP file
-          retention-days: 5  # Optional: Artifact retention
+      # Step 7: Create directory for the ZIP file
+      - name: Create directory for ZIP file
+        run: |
+          # Create a folder to move the ZIP file into
+          mkdir -p ${{ github.workspace }}/plugin_zip
+          # Move the generated ZIP file into the plugin_zip folder
+          mv ${{ github.workspace }}/${{ github.repository }}.zip ${{ github.workspace }}/plugin_zip/
 
-      # Step 8: Deploy the ZIP file directly to FTP server
+      # Step 8: Deploy the ZIP file to FTP server
       - name: Deploy the ZIP file to FTP Server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
@@ -68,6 +70,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}  # Optional: defaults to 21 for FTP
-          local-dir: ${{ github.workspace }}/${{ github.repository }}.zip  # Path to the generated ZIP file
+          local-dir: ${{ github.workspace }}/plugin_zip/  # Path to the directory containing the ZIP file
           server-dir: /wp-project-manager/  # Remote directory on the FTP server
           protocol: ftp  # Specify 'sftp' if using SFTP
