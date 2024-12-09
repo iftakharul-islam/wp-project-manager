@@ -1,6 +1,8 @@
 # Ignore all hidden files and directories
 /.* export-ignore
 
+# Ignore all markdown files
+; /*.md export-ignore
 
 # Ignore following directories and contents
 /node_modules* export-ignore
@@ -10,8 +12,8 @@
 # Ignore following configuration files
 /phpcs.xml export-ignore
 /phpunit.* export-ignore
-composer.lock export-ignore
-composer.json export-ignore
+/composer.lock export-ignore
+/composer.json export-ignore
 /CODEOWNERS export-ignore
 /renovate.json export-ignore
 /webpack.config.js export-ignore
