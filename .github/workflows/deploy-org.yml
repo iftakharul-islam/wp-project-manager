@@ -24,24 +24,21 @@ jobs:
         with:
           node-version: 12.1.0
 
-   
-
-
-      # Step 4: Setup PHP environment (if required for your plugin)
+      # Step 3: Setup PHP environment (if required for your plugin)
       - name: Use desired version of PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
 
-      # Step 5: Composer install (if your plugin requires PHP dependencies)
+      # Step 4: Composer install (if your plugin requires PHP dependencies)
       - name: Composer install and build
         run: |
           composer install
           composer dump-autoload -o
           composer install --no-dev
           composer dump-autoload -o
-      
-          # Step 3: Install Node.js dependencies and build the project
+
+      # Step 5: Install Node.js dependencies and build the project
       - name: Npm install and build
         run: |
           rm -r package-lock.json  # Clean the package-lock file
@@ -49,3 +46,10 @@ jobs:
           npm install -g grunt-cli
           grunt release          # Build the project
 
+      # Step 6: Upload the generated zip file as an artifact
+      - name: Upload plugin zip as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin-zip
+          path: build/wedevs-project-manager-v2.6.15.zip  # Adjust the path to where the zip is saved
+          
