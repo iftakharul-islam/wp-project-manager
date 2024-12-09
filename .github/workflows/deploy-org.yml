@@ -41,4 +41,4 @@ jobs:
         with:
           retention-days: 5
         env:
-         SLUG: wed-project-manager # optional, remove if GitHub repo name matches SVN slug, including capitalization
+         SLUG: wedevs-project-manager # optional, remove if GitHub repo name matches SVN slug, including capitalization
