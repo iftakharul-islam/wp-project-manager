@@ -24,14 +24,7 @@ jobs:
         with:
           node-version: 12.1.0
 
-      # Step 3: Install Node.js dependencies and build the project
-      - name: Npm install and build
-        run: |
-          rm -r package-lock.json  # Clean the package-lock file
-          npm i                     # Install dependencies
-          npm run build             # Run the build process
-          npm run makepot           # Generate POT file for translations
-          npm install -g grunt-cli
+   
 
 
       # Step 4: Setup PHP environment (if required for your plugin)
@@ -47,4 +40,12 @@ jobs:
           composer dump-autoload -o
           composer install --no-dev
           composer dump-autoload -o
-          grunt-cli release
+      
+          # Step 3: Install Node.js dependencies and build the project
+      - name: Npm install and build
+        run: |
+          rm -r package-lock.json  # Clean the package-lock file
+          npm i                     # Install dependencies
+          npm install -g grunt-cli
+          grunt release          # Build the project
+
