@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "test-cicd"  # Trigger on this branch
+    tags:
+      - "*"
 
 permissions:
   contents: write  # Permissions to push the contents
@@ -45,7 +47,7 @@ jobs:
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
         with:
-          dry-run: true
+          dry-run: false
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
