@@ -47,3 +47,4 @@ views/assets/vendor/wp-hooks/wp-hooks.js
 # Re-include essential files within vendor
 !vendor/**/composer.json
 !vendor/**/readme.md
+!vendor/**/README.md
