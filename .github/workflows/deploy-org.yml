@@ -11,45 +11,35 @@ permissions:
 jobs:
   tag:
     name: Deploy plugin for new Tag
-    runs-on: ubuntu-latest  # Use latest Ubuntu runner
-
+    runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Step 2: Setup Node.js environment
+   
+      - uses: actions/checkout@v4
       - name: Use Node.js 12.1.0
         uses: actions/setup-node@v4
         with:
           node-version: 12.1.0
-
-      # Step 3: Setup PHP environment (if required for your plugin)
-      - name: Use desired version of PHP
+      - uses: actions/checkout@master
+      - name: Npm install and build
+        run: |
+          rm -r package-lock.json
+          npm i
+          npm run build
+          npm run makepot
+      - name: Use desired version of php
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-
-      # Step 4: Composer install (if your plugin requires PHP dependencies)
-      - name: Composer install and build
+      - name: Composer install and build # Remove or modify this step as needed
         run: |
           composer install
+          composer update
           composer dump-autoload -o
           composer install --no-dev
           composer dump-autoload -o
-
-      # Step 5: Install Node.js dependencies and build the project
-      - name: Npm install and build
-        run: |
-          rm -r package-lock.json  # Clean the package-lock file
-          npm i                     # Install dependencies
-          npm install -g grunt-cli
-          grunt release          # Build the project
-
-      # Step 6: Upload the generated zip file as an artifact
-      - name: Upload plugin zip as artifact
-        uses: actions/upload-artifact@v3
+      - name: Generate zip
+        uses: 10up/action-wordpress-plugin-build-zip@stable
         with:
-          name: plugin-zip
-          path: build/wedevs-project-manager-v2.6.15.zip  # Adjust the path to where the zip is saved
-          
+          retention-days: 5
+        env:
+         SLUG: wedevs-project-manager # optional, remove if GitHub repo name matches SVN slug, including capitalization
