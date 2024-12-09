@@ -30,9 +30,6 @@ phpunit.xml
 export.sh
 npm-debug.log
 plugin-deploy.sh
-readme.md
-composer.json
-composer.lock
 composer.phar
 secret.json
 codeception.yml
