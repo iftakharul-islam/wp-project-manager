@@ -2,7 +2,7 @@
 /.* export-ignore
 
 # Ignore all markdown files
-; /*.md export-ignore
+/*.md export-ignore
 
 # Ignore following directories and contents
 /node_modules* export-ignore
