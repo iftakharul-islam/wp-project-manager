@@ -22,8 +22,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Npm install and build
         run: |
-          rm -r package-lock.json
-          npm i
+          npm i --legacy-peer-deps
           npm run build
           npm run makepot
       - name: Use desired version of php
