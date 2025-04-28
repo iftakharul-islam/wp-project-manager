@@ -15,7 +15,13 @@ jobs:
     name: Deploy plugin for new Tag
     runs-on: ubuntu-latest
     steps:
-   
+      - uses: actions/checkout@v4
+      - name: Set up environment prerequisites
+        run: |
+          sudo apt-get update --allow-releaseinfo-change
+          sudo apt-get install -y python3 make g++ build-essential
+          npm config set python python3
+
       - uses: actions/checkout@v4
       - name: Use Node.js 12.1.0
         uses: actions/setup-node@v4
