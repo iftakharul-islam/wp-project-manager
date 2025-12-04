@@ -10,6 +10,9 @@ on:
       - master
       - develop
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: API Tests (PHP ${{ matrix.php }}, WP ${{ matrix.wordpress }})
