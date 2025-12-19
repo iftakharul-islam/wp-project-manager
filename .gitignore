@@ -7,9 +7,9 @@
 .DS_Store
 .travis.yml
 npm-debug.log
-/bin/
-/tests/bootstrap.php
-/tests/test-sample.php
+/tests/_output/
+/tests/_support/_generated/
+coverage/
 phpcs.ruleset.xml
 phpunit.xml.dist
 composer.phar
